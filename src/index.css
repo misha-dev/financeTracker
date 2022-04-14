@@ -14,6 +14,7 @@ ul {
   list-style-type: none;
 }
 .btn {
+  width: 100%;
   background: none;
   border: 2px solid #1f9751;
   padding: 6px 12px;

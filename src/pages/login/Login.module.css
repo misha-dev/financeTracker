@@ -1,0 +1,28 @@
+.loginWrapper {
+  display: flex;
+  max-width: 400px;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-top: 50px;
+  padding: 40px;
+  height: 400px;
+  justify-content: center;
+  color: #377195;
+}
+
+.loginWrapper span {
+  display: block;
+  margin: 10px 0;
+}
+
+.loginWrapper input {
+  padding: 5px;
+  border: 2px solid #0E702C;
+  border-radius: 5px;
+  width: 100%;
+  color: #377195;
+
+}
+.loginWrapper input:last-child {
+    margin-bottom: 10px;
+}

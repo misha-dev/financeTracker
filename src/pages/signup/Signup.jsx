@@ -1,10 +1,18 @@
 import React, { useState } from "react";
-import cl from "./Signup.module.css";
+import { useSignUp } from "../../hooks/useSignUp";
+import cl from "./SignUp.module.css";
 
-export const Signup = () => {
+export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("")
+  const [name, setName] = useState("");
+  const { signUp, isPending, error } = useSignUp();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    signUp(email, password, name);
+  };
+
   return (
     <div className={cl.signUpWrapper}>
       <form>
@@ -33,14 +41,24 @@ export const Signup = () => {
           <input
             value={name}
             onChange={(e) => {
-              setPassword(e.target.value);
+              setName(e.target.value);
             }}
             type="text"
             placeholder="Enter the name"
           />
         </label>
-        <button className="btn">Sign up</button>
+        {isPending ? (
+          <button className="btn" disabled>
+            Loading
+          </button>
+        ) : (
+          <button className="btn" onClick={handleSubmit}>
+            Sign up
+          </button>
+        )}
       </form>
+
+      {error && <p>{error}</p>}
     </div>
   );
 };

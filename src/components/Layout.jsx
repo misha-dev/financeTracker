@@ -13,7 +13,7 @@ export default function Layout() {
             <Link to="/login">Login</Link>
           </li>
           <li>
-            <Link to="/signup">Signup</Link>
+            <Link to="/signup">SignUp</Link>
           </li>
         </ul>
       </nav>

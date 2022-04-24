@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import { projectAuth } from "../firebase/config";
 import { useAuthContext } from "./useAuthContext";
 
-export const useLogOut = () => {
+export const useLogin = () => {
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [isUnMounted, setIsUnMounted] = useState(false);
   const { dispatch } = useAuthContext();
 
-  const logOut = async () => {
+  const login = async (email, password) => {
     try {
       setIsPending(true);
-      await projectAuth.signOut();
-      dispatch({ type: "LOGOUT" });
+      const res = await projectAuth.signInWithEmailAndPassword(email, password);
+      dispatch({ type: "LOGIN", payload: res.user });
 
       if (!isUnMounted) {
         setError(false);
@@ -33,5 +33,6 @@ export const useLogOut = () => {
       setIsUnMounted(true);
     };
   }, []);
-  return { logOut, error, isPending };
+
+  return { login, error, isPending };
 };

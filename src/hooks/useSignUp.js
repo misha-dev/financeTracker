@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { projectAuth } from "../firebase/config";
 import { useAuthContext } from "./useAuthContext";
 
 export const useSignUp = () => {
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
+  const [isUnMounted, setIsUnMounted] = useState(false);
+
   const { dispatch } = useAuthContext();
 
   const signUp = async (email, password, displayName) => {
@@ -22,14 +24,25 @@ export const useSignUp = () => {
       await response.user.updateProfile({ displayName });
 
       // dispatching action LOGIN
-      dispatch({type: "LOGIN", payload: response.user});
+      dispatch({ type: "LOGIN", payload: response.user });
 
-      setError(null);
+      if (!isUnMounted) {
+        setError(null);
+      }
     } catch (error) {
-      setError(error.message);
+      if (!isUnMounted) {
+        setError(error.message);
+      }
     } finally {
-      setIsPending(false);
+      if (!isUnMounted) {
+        setIsPending(false);
+      }
     }
   };
+  useEffect(() => {
+    return () => {
+      setIsUnMounted(true);
+    };
+  }, []);
   return { signUp, error, isPending };
 };

@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useLogin } from "../../hooks/useLogin";
 import cl from "./Login.module.css";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = (e) => {
+  const { login, error, isPending } = useLogin();
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password);
+    await login(email, password);
     setEmail("");
     setPassword("");
+    navigate("/");
   };
   return (
     <div className={cl.loginWrapper}>
@@ -33,7 +38,15 @@ export const Login = () => {
             placeholder="Enter the password"
           />
         </label>
-        <button className="btn">Login</button>
+
+        {error && <p>{error}</p>}
+        {isPending ? (
+          <button className="btn" disabled>
+            Loading
+          </button>
+        ) : (
+          <button className="btn">Login</button>
+        )}
       </form>
     </div>
   );

@@ -11,7 +11,7 @@ export const AuthContextProvider = ({ children }) => {
       case "LOGOUT":
         return { ...state, user: null };
       case "LOGGED":
-        return {...state, user: action.payload}
+        return {...state, user: action.payload, logged: true}
       default:
         return state;
     }

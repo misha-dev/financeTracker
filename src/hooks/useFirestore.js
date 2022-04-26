@@ -48,12 +48,11 @@ export const useFirestore = (collection) => {
     // @ts-ignore
     dispatchIfNotUnmounted({ type: "IS_PENDING" });
     try {
-      const addedDocument = await ref.add(doc);
-      console.log(addedDocument);
       const createdAt = timeStamp.fromDate(new Date());
+      const addedDocument = await ref.add({ ...doc, createdAt });
       dispatchIfNotUnmounted({
         type: "ADD_DOCUMENT",
-        payload: { ...addedDocument, createdAt },
+        payload: addedDocument,
       });
       // @ts-ignore
     } catch (error) {

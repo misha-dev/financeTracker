@@ -7,7 +7,11 @@ import TransactionForm from "./TransactionForm";
 
 export const Home = () => {
   const { user } = useAuthContext();
-  const { documents, error } = useCollection("transactions");
+  const { documents, error } = useCollection("transactions", [
+    "uid",
+    "==",
+    user.uid,
+  ]);
   return (
     <div className={cl.container}>
       <div className={cl.content}>

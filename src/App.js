@@ -14,7 +14,7 @@ function App() {
       {logged && (
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+            <Route index element={user ? <Home /> : <Login />} />
             <Route
               path="signup"
               element={user ? <Navigate to={"/"} replace /> : <SignUp />}

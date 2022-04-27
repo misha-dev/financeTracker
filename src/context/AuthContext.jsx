@@ -11,7 +11,7 @@ export const AuthContextProvider = ({ children }) => {
       case "LOGOUT":
         return { ...state, user: null };
       case "LOGGED":
-        return {...state, user: action.payload, logged: true}
+        return { ...state, user: action.payload, logged: true };
       default:
         return state;
     }
@@ -26,7 +26,7 @@ export const AuthContextProvider = ({ children }) => {
       // @ts-ignore
       dispatch({ type: "LOGGED", payload: user });
       // only for the first check, so we end checking if user changes its log value by calling the function
-      unsub()
+      unsub();
     });
   }, []);
 

@@ -1,9 +1,16 @@
+import { ImCross } from "react-icons/im";
 import cl from "./Home.module.css";
-export const Transaction = ({ name, amount }) => {
+export const Transaction = ({ doc, deleteDoc }) => {
   return (
     <div className={cl.transaction}>
-      <div>{name}</div>
-      <div>{amount} $</div>
+      <div>{doc.name}</div>
+      <div>{doc.amount} $</div>
+      <ImCross
+        className={cl.cross}
+        onClick={() => {
+          deleteDoc(doc.id);
+        }}
+      />
     </div>
   );
 };

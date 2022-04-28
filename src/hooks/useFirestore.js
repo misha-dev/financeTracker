@@ -13,6 +13,7 @@ export const useFirestore = (collection) => {
   const [isUnMounted, setIsUnMounted] = useState(false);
   const dispatchIfNotUnmounted = (action) => {
     if (!isUnMounted) {
+      console.log("Mounted? -", isUnMounted, "Action:", action);
       // @ts-ignore
       dispatch(action);
     }
@@ -35,6 +36,14 @@ export const useFirestore = (collection) => {
           isPending: false,
           success: false,
           error: action.payload,
+        };
+
+      case "DELETED_DOC":
+        return {
+          document: null,
+          isPending: false,
+          success: true,
+          error: null,
         };
       default:
         return state;
@@ -61,13 +70,16 @@ export const useFirestore = (collection) => {
     }
   };
 
-  const deleteDocument = (id) => {};
+  const deleteDocument = async (id) => {
+    dispatchIfNotUnmounted({ type: "IS_PENDING" });
+    try {
+      await ref.doc(id).delete();
+      dispatchIfNotUnmounted({ type: "DELETED_DOC" });
+    } catch (error) {
+      dispatchIfNotUnmounted({ type: "ERROR", payload: error.message });
+    }
+  };
 
-  useEffect(() => {
-    return () => {
-      setIsUnMounted(true);
-    };
-  }, []);
 
   return { response, addDocument, deleteDocument };
 };

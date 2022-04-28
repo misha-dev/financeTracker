@@ -60,7 +60,6 @@
   margin: 10px;
 }
 
-
 /* Transaction */
 
 .transaction {
@@ -72,4 +71,22 @@
   font-weight: 600;
   font-size: 1.6rem;
   margin-bottom: 40px;
+  position: relative;
+  box-shadow: 5px 5px 10px 3px;
+}
+
+
+.cross {
+  font-size: 1.2rem;
+  color: #0c527e;
+  position: absolute;
+  top: 35%;
+  left: 95%;
+  cursor: pointer;
+  transition: 0.5s 0.1s ease;
+}
+
+.cross:hover {
+  transition: 0.5s 0.1s ease-in-out;
+  transform: rotateZ(90deg);
 }
